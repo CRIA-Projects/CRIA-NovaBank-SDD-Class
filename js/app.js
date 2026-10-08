@@ -99,6 +99,39 @@ const LOCALES = {
     // Balance toggle
     'balance.toggle_visible': 'Mostrar saldo',
     'balance.toggle_hidden': 'Ocultar saldo',
+    // NovaPoints
+    'pts.title': 'NovaPoints',
+    'pts.subtitle': 'Acumulá puntos con tus consumos y canjealos por beneficios',
+    'pts.balance_label': 'Tu saldo de puntos',
+    'pts.unit': 'puntos',
+    'pts.rule': '1 punto cada $100 de consumo',
+    'pts.catalog_title': 'Canjeá tus puntos',
+    'pts.history_title': 'Historial de puntos',
+    'pts.history_empty': 'Todavía no tenés movimientos de puntos.',
+    'pts.redeem_btn': 'Canjear',
+    'pts.insufficient': 'Puntos insuficientes',
+    'pts.confirm_title': 'Confirmar canje',
+    'pts.confirm_desc': 'Vas a canjear {title} por {cost} puntos.',
+    'pts.confirm_btn': 'Confirmar canje',
+    'pts.cancel': 'Cancelar',
+    'pts.earn_label': 'Compra en {name}',
+    'pts.redeem_label': 'Canje: {title}',
+    'pts.type_discount': 'Descuento',
+    'pts.type_cashback': 'Cashback',
+    'pts.type_miles': 'Millas',
+    'pts.dash_link': 'Ver NovaPoints',
+    'pts.r1.title': '5% de descuento en Rappi',
+    'pts.r1.desc': 'Descuento en tu próximo pedido.',
+    'pts.r2.title': '10% de descuento en supermercados',
+    'pts.r2.desc': 'Válido en comercios adheridos.',
+    'pts.r3.title': '$2.000 de cashback',
+    'pts.r3.desc': 'Se registra como canje de cashback.',
+    'pts.r4.title': '2x1 en Cinemark',
+    'pts.r4.desc': 'Dos entradas al precio de una.',
+    'pts.r5.title': '$10.000 de cashback',
+    'pts.r5.desc': 'Se registra como canje de cashback.',
+    'pts.r6.title': '6.000 millas aéreas',
+    'pts.r6.desc': 'Sumalas a tu programa de millas.',
   },
 
   en: {
@@ -195,6 +228,39 @@ const LOCALES = {
     // Balance toggle
     'balance.toggle_visible': 'Show balance',
     'balance.toggle_hidden': 'Hide balance',
+    // NovaPoints
+    'pts.title': 'NovaPoints',
+    'pts.subtitle': 'Earn points with your purchases and redeem them for benefits',
+    'pts.balance_label': 'Your points balance',
+    'pts.unit': 'points',
+    'pts.rule': '1 point for every $100 spent',
+    'pts.catalog_title': 'Redeem your points',
+    'pts.history_title': 'Points history',
+    'pts.history_empty': 'You don\'t have any points activity yet.',
+    'pts.redeem_btn': 'Redeem',
+    'pts.insufficient': 'Not enough points',
+    'pts.confirm_title': 'Confirm redemption',
+    'pts.confirm_desc': 'You are about to redeem {title} for {cost} points.',
+    'pts.confirm_btn': 'Confirm redemption',
+    'pts.cancel': 'Cancel',
+    'pts.earn_label': 'Purchase at {name}',
+    'pts.redeem_label': 'Redemption: {title}',
+    'pts.type_discount': 'Discount',
+    'pts.type_cashback': 'Cashback',
+    'pts.type_miles': 'Miles',
+    'pts.dash_link': 'View NovaPoints',
+    'pts.r1.title': '5% off at Rappi',
+    'pts.r1.desc': 'Discount on your next order.',
+    'pts.r2.title': '10% off at supermarkets',
+    'pts.r2.desc': 'Valid at participating stores.',
+    'pts.r3.title': '$2,000 cashback',
+    'pts.r3.desc': 'Recorded as a cashback redemption.',
+    'pts.r4.title': '2-for-1 at Cinemark',
+    'pts.r4.desc': 'Two tickets for the price of one.',
+    'pts.r5.title': '$10,000 cashback',
+    'pts.r5.desc': 'Recorded as a cashback redemption.',
+    'pts.r6.title': '6,000 air miles',
+    'pts.r6.desc': 'Add them to your miles program.',
   },
 
   pt: {
@@ -291,6 +357,39 @@ const LOCALES = {
     // Balance toggle
     'balance.toggle_visible': 'Mostrar saldo',
     'balance.toggle_hidden': 'Ocultar saldo',
+    // NovaPoints
+    'pts.title': 'NovaPoints',
+    'pts.subtitle': 'Acumule pontos com suas compras e troque por benefícios',
+    'pts.balance_label': 'Seu saldo de pontos',
+    'pts.unit': 'pontos',
+    'pts.rule': '1 ponto a cada $100 em compras',
+    'pts.catalog_title': 'Troque seus pontos',
+    'pts.history_title': 'Histórico de pontos',
+    'pts.history_empty': 'Você ainda não tem movimentações de pontos.',
+    'pts.redeem_btn': 'Trocar',
+    'pts.insufficient': 'Pontos insuficientes',
+    'pts.confirm_title': 'Confirmar troca',
+    'pts.confirm_desc': 'Você vai trocar {title} por {cost} pontos.',
+    'pts.confirm_btn': 'Confirmar troca',
+    'pts.cancel': 'Cancelar',
+    'pts.earn_label': 'Compra em {name}',
+    'pts.redeem_label': 'Troca: {title}',
+    'pts.type_discount': 'Desconto',
+    'pts.type_cashback': 'Cashback',
+    'pts.type_miles': 'Milhas',
+    'pts.dash_link': 'Ver NovaPoints',
+    'pts.r1.title': '5% de desconto no Rappi',
+    'pts.r1.desc': 'Desconto no seu próximo pedido.',
+    'pts.r2.title': '10% de desconto em supermercados',
+    'pts.r2.desc': 'Válido em lojas participantes.',
+    'pts.r3.title': '$2.000 de cashback',
+    'pts.r3.desc': 'Registrado como troca de cashback.',
+    'pts.r4.title': '2x1 no Cinemark',
+    'pts.r4.desc': 'Dois ingressos pelo preço de um.',
+    'pts.r5.title': '$10.000 de cashback',
+    'pts.r5.desc': 'Registrado como troca de cashback.',
+    'pts.r6.title': '6.000 milhas aéreas',
+    'pts.r6.desc': 'Some ao seu programa de milhas.',
   },
 };
 
@@ -336,6 +435,7 @@ const I18n = (() => {
     Dashboard.render();
     Movements.render();
     Beneficios.filter(Beneficios.getActiveCategory());
+    NovaPoints.render();
     Router.refreshTitle();
     SidebarToggle.updateUI();
   }
@@ -441,6 +541,15 @@ const DATA = {
       tag:'Entretenimiento', emoji:'📱', bg:'#0a001a', vto:'Oferta limitada',
       category:'entretenimiento', badge:'badge-danger', badgeText:'Últimas unidades',
     },
+  ],
+
+  rewards: [
+    { id:1, emoji:'🍔', bg:'#1a0a00', cost:100,  type:'discount', titleKey:'pts.r1.title', descKey:'pts.r1.desc' },
+    { id:2, emoji:'🛒', bg:'#001a0a', cost:300,  type:'discount', titleKey:'pts.r2.title', descKey:'pts.r2.desc' },
+    { id:3, emoji:'💵', bg:'#0a1a00', cost:500,  type:'cashback', titleKey:'pts.r3.title', descKey:'pts.r3.desc' },
+    { id:4, emoji:'🎬', bg:'#1a000a', cost:1000, type:'discount', titleKey:'pts.r4.title', descKey:'pts.r4.desc' },
+    { id:5, emoji:'💰', bg:'#0a1a00', cost:2500, type:'cashback', titleKey:'pts.r5.title', descKey:'pts.r5.desc' },
+    { id:6, emoji:'✈️', bg:'#000a1a', cost:5000, type:'miles',    titleKey:'pts.r6.title', descKey:'pts.r6.desc' },
   ],
 
 };
@@ -627,7 +736,10 @@ const Dashboard = (() => {
     renderBalance();
     updateBalanceToggleUI();
     updateBalanceSensitiveElements();
+    NovaPoints.render();
   }
+
+  function isBalanceVisible() { return balanceVisible; }
 
   // Render balance with mask if hidden
   function renderBalance() {
@@ -714,7 +826,7 @@ const Dashboard = (() => {
     updateBalanceSensitiveElements();
   }
 
-  return { render, toggleBalanceVisibility, initBalanceVisibility };
+  return { render, toggleBalanceVisibility, initBalanceVisibility, isBalanceVisible };
 
 })();
 
@@ -866,6 +978,179 @@ const Beneficios = (() => {
 
 
 /* ============================================================
+   NOVAPOINTS MODULE  (puntos de fidelidad — acumulación derivada de DATA.movements, canjes persistidos)
+   ============================================================ */
+
+const NovaPoints = (() => {
+
+  const POINTS_RULE = { perAmount: 100 };
+  const STORAGE_KEY = 'novabanco-points-redeemed';
+
+  let redemptions = [];   // [{ rewardId, cost, ts }]
+  let pendingReward = null;
+
+  function earnFor(movement) {
+    const amount = movement && movement.amount;
+    if (typeof amount !== 'number' || !isFinite(amount) || amount >= 0) return 0;
+    return Math.floor(Math.abs(amount) / POINTS_RULE.perAmount);
+  }
+
+  function findReward(id) { return DATA.rewards.find(r => r.id === id); }
+
+  function loadRedemptions() {
+    try {
+      const raw = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      if (Array.isArray(raw)) {
+        redemptions = raw.filter(r => r && findReward(r.rewardId) &&
+          typeof r.cost === 'number' && isFinite(r.cost) && r.cost > 0 &&
+          typeof r.ts === 'number');
+      }
+    } catch(e) {
+      redemptions = [];
+    }
+  }
+
+  function saveRedemptions() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(redemptions)); } catch(e) {}
+  }
+
+  // Historial: canjes (más recientes primero) y luego acumulaciones en el orden de DATA.movements (más reciente primero)
+  function getHistory() {
+    const locale = I18n.getLocale();
+    const redeems = redemptions.slice().sort((a, b) => b.ts - a.ts).map(r => ({
+      kind: 'redeem',
+      label: I18n.t('pts.redeem_label').replace('{title}', I18n.t(findReward(r.rewardId).titleKey)),
+      date: new Date(r.ts).toLocaleDateString(locale, { day: '2-digit', month: 'short' }),
+      points: -r.cost,
+    }));
+    const earns = DATA.movements
+      .map(m => ({ m, pts: earnFor(m) }))
+      .filter(e => e.pts > 0)
+      .map(e => ({
+        kind: 'earn',
+        label: I18n.t('pts.earn_label').replace('{name}', e.m.name),
+        date: e.m.date,
+        points: e.pts,
+      }));
+    return redeems.concat(earns);
+  }
+
+  function getBalance() {
+    return getHistory().reduce((sum, h) => sum + h.points, 0);
+  }
+
+  function fmt(n) { return n.toLocaleString(I18n.getLocale()); }
+
+  function pointsText(n) {
+    return Dashboard.isBalanceVisible() ? fmt(n) : '••••';
+  }
+
+  function renderBalanceCards() {
+    const bal = getBalance();
+    const main = document.getElementById('points-balance');
+    if (main) main.textContent = pointsText(bal);
+    const dash = document.getElementById('dash-points-balance');
+    if (dash) dash.textContent = pointsText(bal);
+  }
+
+  function renderCatalog() {
+    const grid = document.getElementById('points-catalog');
+    if (!grid) return;
+    const bal = getBalance();
+    grid.innerHTML = DATA.rewards.map(r => {
+      const ok = r.cost <= bal;
+      return `
+      <div class="beneficio-card points-reward">
+        <div class="beneficio-img" style="background:${r.bg}">${r.emoji}</div>
+        <div class="beneficio-body">
+          <div class="beneficio-tag">${I18n.t('pts.type_' + r.type)}</div>
+          <div class="beneficio-title">${I18n.t(r.titleKey)}</div>
+          <div class="beneficio-desc">${I18n.t(r.descKey)}</div>
+          <div class="beneficio-footer">
+            <span class="points-cost">${fmt(r.cost)} ${I18n.t('pts.unit')}</span>
+            <button class="btn ${ok ? 'btn-primary' : 'btn-secondary'}" ${ok ? '' : 'disabled'}
+                    onclick="openPointsRedeem(${r.id})">${ok ? I18n.t('pts.redeem_btn') : I18n.t('pts.insufficient')}</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function renderHistory() {
+    const list = document.getElementById('points-history');
+    if (!list) return;
+    const items = getHistory();
+    if (items.length === 0) {
+      list.innerHTML = `<p style="color:var(--text-muted);padding:20px 0">${I18n.t('pts.history_empty')}</p>`;
+      return;
+    }
+    list.innerHTML = items.map(h => `
+      <div class="movement-item">
+        <div class="movement-icon" style="background:${h.kind === 'earn' ? 'var(--accent-dim)' : 'rgba(255,59,48,0.15)'}">${h.kind === 'earn' ? '⭐' : '🎁'}</div>
+        <div class="movement-info">
+          <div class="movement-name">${h.label}</div>
+          <div class="movement-date">${h.date}</div>
+        </div>
+        <div class="movement-amount ${h.points < 0 ? 'debit' : 'credit'}">
+          ${h.points < 0 ? '-' : '+'}${fmt(Math.abs(h.points))} ${I18n.t('pts.unit')}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function render() {
+    renderBalanceCards();
+    renderCatalog();
+    renderHistory();
+    const rule = document.getElementById('points-rule');
+    if (rule) rule.textContent = I18n.t('pts.rule');
+  }
+
+  function openRedeem(rewardId) {
+    const r = findReward(rewardId);
+    if (!r || r.cost > getBalance()) return;
+    pendingReward = r;
+    const desc = document.getElementById('points-modal-desc');
+    if (desc) {
+      desc.textContent = I18n.t('pts.confirm_desc')
+        .replace('{title}', I18n.t(r.titleKey))
+        .replace('{cost}', fmt(r.cost));
+    }
+    const btn = document.getElementById('points-confirm-btn');
+    if (btn) btn.disabled = false;
+    document.getElementById('points-modal-overlay').classList.add('open');
+  }
+
+  function closeRedeem() {
+    pendingReward = null;
+    document.getElementById('points-modal-overlay').classList.remove('open');
+  }
+
+  function confirmRedeem() {
+    const r = pendingReward;
+    pendingReward = null;                      // evita doble canje por doble clic
+    document.getElementById('points-modal-overlay').classList.remove('open');
+    if (!r || r.cost > getBalance()) return;   // saldo insuficiente: sin cambios
+    redemptions.push({ rewardId: r.id, cost: r.cost, ts: Date.now() });
+    saveRedemptions();
+    render();
+  }
+
+  function closeOnOverlayClick(event) {
+    if (event.target === document.getElementById('points-modal-overlay')) closeRedeem();
+  }
+
+  function init() {
+    loadRedemptions();
+    render();
+  }
+
+  return { init, render, earnFor, getBalance, openRedeem, closeRedeem, confirmRedeem, closeOnOverlayClick };
+
+})();
+
+
+/* ============================================================
    MODAL MODULE  (T09 — pasos de descarga usan I18n.t() en tiempo de ejecución)
    ============================================================ */
 
@@ -944,6 +1229,7 @@ document.addEventListener('DOMContentLoaded', () => {
   Dashboard.render();
   Movements.render();
   Beneficios.init();
+  NovaPoints.init();
 
   window.navigate          = (v)   => Router.navigate(v);
   window.openModal         = ()    => Modal.open();
@@ -953,6 +1239,10 @@ document.addEventListener('DOMContentLoaded', () => {
   window.filterMovements   = (v)   => Movements.onSearchInput(v);
   window.filterByCategory  = (v)   => Movements.onCategoryChange(v);
   window.filterBeneficios  = (cat) => Beneficios.filter(cat);
+  window.openPointsRedeem  = (id)  => NovaPoints.openRedeem(id);
+  window.closePointsRedeem = ()    => NovaPoints.closeRedeem();
+  window.confirmPointsRedeem = ()  => NovaPoints.confirmRedeem();
+  window.closePointsModalOutside = (e) => NovaPoints.closeOnOverlayClick(e);
   window.toggleTheme       = ()    => Theme.toggle();
   window.switchLocale      = (l)   => I18n.setLocale(l);
   window.toggleSidebar     = ()    => SidebarToggle.toggle();

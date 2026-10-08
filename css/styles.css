@@ -1029,3 +1029,57 @@ html[data-sidebar-collapsed="true"] .main-content {
   html[data-sidebar-collapsed="true"] .sidebar        { width: var(--sidebar-w); }
   html[data-sidebar-collapsed="true"] .main-content   { margin-left: 0; }
 }
+
+
+/* ── NovaPoints ────────────────────────────────────────────── */
+.points-section        { margin-bottom: 40px; }
+.points-heading        { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 4px; }
+.points-subheading     { font-size: 16px; font-weight: 700; margin: 28px 0 14px; }
+
+.points-balance-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-top: 16px;
+}
+.points-balance-label  { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+.points-balance-value  { font-size: 40px; font-weight: 800; letter-spacing: -1px; color: var(--accent); margin: 6px 0; word-break: break-word; }
+.points-balance-unit   { font-size: 16px; font-weight: 600; color: var(--text-muted); letter-spacing: 0; }
+.points-rule           { font-size: 13px; color: var(--text-muted); }
+
+.points-cost           { font-size: 13px; font-weight: 700; color: var(--accent); }
+.points-reward .beneficio-footer { gap: 8px; flex-wrap: wrap; }
+.points-reward .btn[disabled] { opacity: 0.55; cursor: not-allowed; }
+
+.points-history {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px 20px;
+}
+
+.points-chip {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.points-chip:hover     { border-color: var(--accent); }
+.points-chip-icon      { width: 40px; height: 40px; border-radius: 12px; background: var(--accent-dim); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.points-chip-info      { flex: 1; min-width: 0; }
+.points-chip-label     { font-size: 12px; color: var(--text-muted); }
+.points-chip-value     { font-size: 20px; font-weight: 700; }
+.points-chip-link      { font-size: 13px; font-weight: 600; color: var(--accent); white-space: nowrap; }
+
+@media (max-width: 640px) {
+  .points-balance-value { font-size: 32px; }
+  .points-chip-link     { display: none; }
+  .points-history       { padding: 4px 14px; }
+}
