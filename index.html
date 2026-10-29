@@ -153,6 +153,24 @@
 
     <div class="page-wrapper">
 
+      <!-- Display currency: ARS / USD (official rate). Public info — never masked. -->
+      <div class="currency-bar" id="currency-bar" role="group" aria-label="Moneda de visualización">
+        <span class="currency-bar-label" data-i18n="cur.label">Moneda</span>
+        <div class="currency-switch">
+          <button type="button" class="currency-btn" id="currency-btn-ars" aria-pressed="true"
+                  onclick="setDisplayCurrency('ARS')">ARS</button>
+          <button type="button" class="currency-btn" id="currency-btn-usd" aria-pressed="false"
+                  onclick="setDisplayCurrency('USD')">USD</button>
+        </div>
+        <div class="currency-info">
+          <span class="currency-rate" id="currency-rate"></span>
+          <span class="currency-updated" id="currency-updated"></span>
+          <span class="currency-status" id="currency-status" role="status" aria-live="polite" data-state="idle"></span>
+        </div>
+        <button type="button" class="btn btn-ghost currency-refresh" id="currency-refresh-btn"
+                onclick="refreshExchangeRate()" hidden></button>
+      </div>
+
       <!-- ════════════════════════════════════
            VIEW: DASHBOARD
       ════════════════════════════════════ -->
@@ -350,11 +368,11 @@
         <div class="stats-bar">
           <div class="stats-bar-item">
             <div class="stats-bar-label" data-i18n="mov.expenses">Gastos este mes</div>
-            <div class="stats-bar-value" id="stats-debits" style="color:var(--danger)"></div>
+            <div class="stats-bar-value" id="stats-debits" style="color:var(--danger)" data-balance-sensitive></div>
           </div>
           <div class="stats-bar-item">
             <div class="stats-bar-label" data-i18n="mov.income">Ingresos este mes</div>
-            <div class="stats-bar-value" id="stats-credits" style="color:var(--success)"></div>
+            <div class="stats-bar-value" id="stats-credits" style="color:var(--success)" data-balance-sensitive></div>
           </div>
           <div class="stats-bar-item">
             <div class="stats-bar-label" data-i18n="mov.count">Movimientos</div>

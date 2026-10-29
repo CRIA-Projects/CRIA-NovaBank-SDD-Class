@@ -132,6 +132,23 @@ const LOCALES = {
     'pts.r5.desc': 'Se registra como canje de cashback.',
     'pts.r6.title': '6.000 millas aéreas',
     'pts.r6.desc': 'Sumalas a tu programa de millas.',
+    'pts.cashback_title': '{amount} de cashback',
+
+    // Display currency (ARS / USD oficial)
+    'cur.label': 'Moneda',
+    'cur.group_label': 'Moneda de visualización',
+    'cur.ars_label': 'Mostrar importes en pesos argentinos',
+    'cur.usd_label': 'Mostrar importes en dólares (dólar oficial)',
+    'cur.rate_line': '1 USD = ARS {rate} · Oficial venta · DolarAPI',
+    'cur.updated': 'Actualizada: {date}',
+    'cur.refresh': 'Actualizar',
+    'cur.retry': 'Reintentar',
+    'cur.status_loading': 'Obteniendo cotización oficial…',
+    'cur.status_ready': 'Cotización verificada',
+    'cur.status_unverified': 'Cotización guardada, sin verificar',
+    'cur.status_failed': 'No se pudo actualizar: se usa la última cotización guardada (desactualizada).',
+    'cur.status_old': 'La cotización tiene más de 24 horas y puede estar desactualizada.',
+    'cur.status_error': 'No se pudo obtener la cotización oficial. Los importes siguen en pesos.',
   },
 
   en: {
@@ -261,6 +278,23 @@ const LOCALES = {
     'pts.r5.desc': 'Recorded as a cashback redemption.',
     'pts.r6.title': '6,000 air miles',
     'pts.r6.desc': 'Add them to your miles program.',
+    'pts.cashback_title': '{amount} cashback',
+
+    // Display currency (ARS / official USD)
+    'cur.label': 'Currency',
+    'cur.group_label': 'Display currency',
+    'cur.ars_label': 'Show amounts in Argentine pesos',
+    'cur.usd_label': 'Show amounts in US dollars (official rate)',
+    'cur.rate_line': '1 USD = ARS {rate} · Official sell · DolarAPI',
+    'cur.updated': 'Updated: {date}',
+    'cur.refresh': 'Refresh',
+    'cur.retry': 'Retry',
+    'cur.status_loading': 'Fetching official exchange rate…',
+    'cur.status_ready': 'Rate verified',
+    'cur.status_unverified': 'Saved rate, not yet verified',
+    'cur.status_failed': 'Could not update: using the last saved rate (outdated).',
+    'cur.status_old': 'The rate is more than 24 hours old and may be outdated.',
+    'cur.status_error': 'Could not get the official exchange rate. Amounts remain in pesos.',
   },
 
   pt: {
@@ -390,6 +424,23 @@ const LOCALES = {
     'pts.r5.desc': 'Registrado como troca de cashback.',
     'pts.r6.title': '6.000 milhas aéreas',
     'pts.r6.desc': 'Some ao seu programa de milhas.',
+    'pts.cashback_title': '{amount} de cashback',
+
+    // Display currency (ARS / dólar oficial)
+    'cur.label': 'Moeda',
+    'cur.group_label': 'Moeda de exibição',
+    'cur.ars_label': 'Mostrar valores em pesos argentinos',
+    'cur.usd_label': 'Mostrar valores em dólares (dólar oficial)',
+    'cur.rate_line': '1 USD = ARS {rate} · Oficial venda · DolarAPI',
+    'cur.updated': 'Atualizada: {date}',
+    'cur.refresh': 'Atualizar',
+    'cur.retry': 'Tentar novamente',
+    'cur.status_loading': 'Buscando cotação oficial…',
+    'cur.status_ready': 'Cotação verificada',
+    'cur.status_unverified': 'Cotação salva, ainda não verificada',
+    'cur.status_failed': 'Não foi possível atualizar: usando a última cotação salva (desatualizada).',
+    'cur.status_old': 'A cotação tem mais de 24 horas e pode estar desatualizada.',
+    'cur.status_error': 'Não foi possível obter a cotação oficial. Os valores continuam em pesos.',
   },
 };
 
@@ -432,6 +483,7 @@ const I18n = (() => {
     });
 
     applyToDOM();
+    CurrencyDisplay.renderControls();
     Dashboard.render();
     Movements.render();
     Beneficios.filter(Beneficios.getActiveCategory());
@@ -546,9 +598,9 @@ const DATA = {
   rewards: [
     { id:1, emoji:'🍔', bg:'#1a0a00', cost:100,  type:'discount', titleKey:'pts.r1.title', descKey:'pts.r1.desc' },
     { id:2, emoji:'🛒', bg:'#001a0a', cost:300,  type:'discount', titleKey:'pts.r2.title', descKey:'pts.r2.desc' },
-    { id:3, emoji:'💵', bg:'#0a1a00', cost:500,  type:'cashback', titleKey:'pts.r3.title', descKey:'pts.r3.desc' },
+    { id:3, emoji:'💵', bg:'#0a1a00', cost:500,  type:'cashback', titleKey:'pts.r3.title', descKey:'pts.r3.desc', amountARS: 2000 },
     { id:4, emoji:'🎬', bg:'#1a000a', cost:1000, type:'discount', titleKey:'pts.r4.title', descKey:'pts.r4.desc' },
-    { id:5, emoji:'💰', bg:'#0a1a00', cost:2500, type:'cashback', titleKey:'pts.r5.title', descKey:'pts.r5.desc' },
+    { id:5, emoji:'💰', bg:'#0a1a00', cost:2500, type:'cashback', titleKey:'pts.r5.title', descKey:'pts.r5.desc', amountARS: 10000 },
     { id:6, emoji:'✈️', bg:'#000a1a', cost:5000, type:'miles',    titleKey:'pts.r6.title', descKey:'pts.r6.desc' },
   ],
 
@@ -569,6 +621,10 @@ function formatARS(amount) {
 function formatAmountSigned(amount) {
   return (amount < 0 ? '-' : '+') + formatARS(amount);
 }
+
+// Display-currency aware (ARS or USD at the official rate); input is always the original ARS amount
+function formatMoney(amountARS)       { return CurrencyDisplay.formatAmount(amountARS, false); }
+function formatMoneySigned(amountARS) { return CurrencyDisplay.formatAmount(amountARS, true); }
 
 function getTodayLabel() {
   return new Date().toLocaleDateString('es-AR', {
@@ -706,6 +762,324 @@ const SidebarToggle = (() => {
 
 
 /* ============================================================
+   CURRENCY DISPLAY  (ARS ↔ USD at the official rate — display only, DATA is never mutated)
+   ============================================================ */
+
+const CurrencyDisplay = (() => {
+
+  const PREF_KEY   = 'novabanco-display-currency';
+  const RATE_KEY   = 'novabanco-usd-official-rate';
+  const RATE_URL   = 'https://dolarapi.com/v1/dolares/oficial';
+  const RATE_SOURCE = 'dolarapi';
+  const RATE_SIDE   = 'venta';
+  const FETCH_TIMEOUT_MS = 8000;
+  const FRESH_MS   = 5 * 60 * 1000;        // reuse a verified rate this long before re-querying
+  const OLD_MS     = 24 * 60 * 60 * 1000;  // provider date older than this → warn
+  const CHECK_MS   = 60 * 1000;            // light timer: re-render only when the status changes
+  const LOCALE_TAGS = { es: 'es-AR', en: 'en-US', pt: 'pt-BR' };
+  const AR_TZ = 'America/Argentina/Buenos_Aires';
+
+  let requestedCurrency = 'ARS';   // latest user intention
+  let currency = 'ARS';            // effective mode; USD requires a valid rate
+  let rate = null;                 // { value, updatedAt, fetchedAt, source, side }
+  let verifiedAt = 0;              // session time of the last successful query (0 = not verified this session)
+  let lastFetchFailed = false;
+  let inFlight = null;
+  let timerId = null;
+  let lastStatusKey = '';
+  const listeners = [];
+
+  /* ── validation ── */
+
+  function isIsoWithZone(s) {
+    return typeof s === 'string' &&
+      /^\d{4}-\d{2}-\d{2}T[\d:.]+(Z|[+-]\d{2}:?\d{2})$/.test(s) &&
+      Number.isFinite(Date.parse(s));
+  }
+
+  function isValidRateValue(v) {
+    return typeof v === 'number' && Number.isFinite(v) && v > 0;
+  }
+
+  // DolarAPI payload → { value, updatedAt } | null (no coercion, no substitution by other rates)
+  function parsePayload(json) {
+    if (!json || typeof json !== 'object') return null;
+    if (json.moneda !== 'USD' || json.casa !== 'oficial') return null;
+    if (!isValidRateValue(json.venta)) return null;
+    if (!isIsoWithZone(json.fechaActualizacion)) return null;
+    return { value: json.venta, updatedAt: new Date(json.fechaActualizacion).toISOString() };
+  }
+
+  /* ── persistence (own keys only, every access guarded) ── */
+
+  function loadPref() {
+    try {
+      const v = localStorage.getItem(PREF_KEY);
+      return (v === 'ARS' || v === 'USD') ? v : null;
+    } catch(e) { return null; }
+  }
+
+  function savePref(v) {
+    try { localStorage.setItem(PREF_KEY, v); } catch(e) {}
+  }
+
+  function loadCachedRate() {
+    let raw;
+    try { raw = localStorage.getItem(RATE_KEY); } catch(e) { return null; }
+    if (raw === null) return null;                       // absent
+    try {
+      const c = JSON.parse(raw);
+      if (c && c.version === 1 && c.source === RATE_SOURCE && c.side === RATE_SIDE &&
+          isValidRateValue(c.value) && isIsoWithZone(c.updatedAt) && isIsoWithZone(c.fetchedAt)) {
+        return { value: c.value, updatedAt: c.updatedAt, fetchedAt: c.fetchedAt, source: c.source, side: c.side };
+      }
+    } catch(e) {}
+    try { localStorage.removeItem(RATE_KEY); } catch(e) {}   // corrupt: discard our own key
+    return null;
+  }
+
+  function saveRate(r) {
+    try {
+      localStorage.setItem(RATE_KEY, JSON.stringify({
+        version: 1, value: r.value, updatedAt: r.updatedAt, fetchedAt: r.fetchedAt,
+        source: r.source, side: r.side,
+      }));
+    } catch(e) {}
+  }
+
+  /* ── state ── */
+
+  // ready | unverified | failed | old | error | idle  (loading is reported separately)
+  function rateQuality() {
+    if (!rate) return lastFetchFailed ? 'error' : 'idle';
+    if (lastFetchFailed) return 'failed';
+    if (Date.now() - Date.parse(rate.updatedAt) > OLD_MS) return 'old';
+    if (!verifiedAt) return 'unverified';
+    return 'ready';
+  }
+
+  function getSnapshot() {
+    return {
+      requestedCurrency: requestedCurrency,
+      currency: currency,
+      rate: rate ? Object.assign({}, rate) : null,
+      status: rateQuality(),
+      loading: inFlight !== null,
+    };
+  }
+
+  function statusKey() {
+    return currency + '|' + requestedCurrency + '|' + rateQuality() + '|' + (inFlight ? 'L' : '');
+  }
+
+  function notify() {
+    lastStatusKey = statusKey();
+    listeners.forEach(fn => { try { fn(getSnapshot()); } catch(e) { console.warn('CurrencyDisplay listener failed', e); } });
+  }
+
+  function subscribe(fn) { listeners.push(fn); }
+
+  function isUSD() { return currency === 'USD' && rate !== null; }
+
+  /* ── network ── */
+
+  function requestRate() {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), FETCH_TIMEOUT_MS);
+    return fetch(RATE_URL, { signal: ctrl.signal, credentials: 'omit', cache: 'no-store' })
+      .then(res => {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(json => {
+        const parsed = parsePayload(json);
+        if (!parsed) throw new Error('Invalid rate payload');
+        return parsed;
+      })
+      .finally(() => clearTimeout(timer));
+  }
+
+  // Applies the user's *latest* intention once a query settles; a late response never undoes an ARS choice
+  function settle() {
+    inFlight = null;
+    if (requestedCurrency === 'USD' && rate) {
+      currency = 'USD';
+      savePref('USD');
+    }
+    notify();
+    return getSnapshot();
+  }
+
+  function refreshRate(opts) {
+    if (inFlight) return inFlight;                       // one shared request
+    const force = !!(opts && opts.force);
+    if (!force && rate && verifiedAt && !lastFetchFailed && Date.now() - verifiedAt < FRESH_MS) {
+      return Promise.resolve(getSnapshot());
+    }
+    inFlight = new Promise(resolve => resolve(requestRate()))   // a sync throw becomes a rejection
+      .then(parsed => {
+        rate = { value: parsed.value, updatedAt: parsed.updatedAt, fetchedAt: new Date().toISOString(),
+                 source: RATE_SOURCE, side: RATE_SIDE };
+        verifiedAt = Date.now();
+        lastFetchFailed = false;
+        saveRate(rate);
+      })
+      .catch(err => {
+        lastFetchFailed = true;                          // keep the previous valid rate, if any
+        console.warn('Official USD rate unavailable:', err && err.message);
+      })
+      .then(settle);
+    notify();                                            // show the loading state
+    return inFlight;
+  }
+
+  function setCurrency(next) {
+    if (next !== 'ARS' && next !== 'USD') return Promise.resolve(getSnapshot());
+    requestedCurrency = next;
+    if (next === 'ARS') {
+      currency = 'ARS';
+      savePref('ARS');
+      notify();
+      return Promise.resolve(getSnapshot());
+    }
+    if (rate) {                                          // switch right away with the saved rate…
+      currency = 'USD';
+      savePref('USD');
+    }
+    notify();
+    return refreshRate();                                // …and verify (or fetch the first one)
+  }
+
+  /* ── formatting ── */
+
+  function localeTag() { return LOCALE_TAGS[I18n.getLocale()] || 'es-AR'; }
+
+  function usdValue(amountARS) {
+    const v = amountARS / rate.value;
+    return Number.isFinite(v) ? v : null;
+  }
+
+  function numberFormat(tag) {
+    return new Intl.NumberFormat(tag, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  // Amount sign comes from the ARS value so tiny debits keep "-" even if they round to 0,00
+  function formatAmount(amountARS, signed) {
+    const usd = isUSD() ? usdValue(amountARS) : null;
+    if (usd === null) return signed ? formatAmountSigned(amountARS) : formatARS(amountARS);
+    const text = 'US$' + numberFormat(localeTag()).format(Math.abs(usd));
+    return signed ? (amountARS < 0 ? '-' : '+') + text : text;
+  }
+
+  // Balance hero: { symbol, int, dec } — dec includes the locale's decimal separator
+  function balanceParts(amountARS) {
+    const usd = isUSD() ? usdValue(amountARS) : null;
+    const value = usd === null ? amountARS : usd;
+    const parts = numberFormat(usd === null ? 'es-AR' : localeTag()).formatToParts(value);
+    let int = '', dec = '';
+    parts.forEach(p => {
+      if (p.type === 'decimal' || p.type === 'fraction') dec += p.value;
+      else if (p.type === 'integer' || p.type === 'group' || p.type === 'minusSign') int += p.value;
+    });
+    return { symbol: usd === null ? '$' : 'US$', int: int, dec: dec };
+  }
+
+  function formatUpdated(iso) {
+    try {
+      return new Date(iso).toLocaleString(localeTag(), {
+        dateStyle: 'medium', timeStyle: 'short', timeZone: AR_TZ, timeZoneName: 'short',
+      });
+    } catch(e) { return iso; }
+  }
+
+  /* ── controls (public information: never hidden by the balance mask) ── */
+
+  function statusMessageKey(snap) {
+    if (snap.loading) return 'cur.status_loading';
+    switch (snap.status) {
+      case 'ready':      return 'cur.status_ready';
+      case 'unverified': return 'cur.status_unverified';
+      case 'failed':     return 'cur.status_failed';
+      case 'old':        return 'cur.status_old';
+      case 'error':      return 'cur.status_error';
+      default:           return '';
+    }
+  }
+
+  function renderControls() {
+    const snap = getSnapshot();
+    const group = document.getElementById('currency-bar');
+    if (!group) return;
+    group.setAttribute('aria-label', I18n.t('cur.group_label'));
+
+    const btnARS = document.getElementById('currency-btn-ars');
+    const btnUSD = document.getElementById('currency-btn-usd');
+    if (btnARS) {
+      btnARS.setAttribute('aria-pressed', String(snap.currency === 'ARS'));
+      btnARS.setAttribute('aria-label', I18n.t('cur.ars_label'));
+      btnARS.setAttribute('title', I18n.t('cur.ars_label'));
+    }
+    if (btnUSD) {
+      btnUSD.setAttribute('aria-pressed', String(snap.currency === 'USD'));
+      btnUSD.setAttribute('aria-label', I18n.t('cur.usd_label'));
+      btnUSD.setAttribute('title', I18n.t('cur.usd_label'));
+    }
+
+    const wantsUSD = snap.requestedCurrency === 'USD';
+    const rateEl = document.getElementById('currency-rate');
+    const updatedEl = document.getElementById('currency-updated');
+    const showRate = snap.currency === 'USD' && snap.rate;
+    if (rateEl) {
+      rateEl.textContent = showRate
+        ? I18n.t('cur.rate_line').replace('{rate}', numberFormat(localeTag()).format(snap.rate.value))
+        : '';
+    }
+    if (updatedEl) {
+      updatedEl.textContent = showRate
+        ? I18n.t('cur.updated').replace('{date}', formatUpdated(snap.rate.updatedAt))
+        : '';
+    }
+
+    // Status only matters while the user asks for USD (or something is loading)
+    const statusEl = document.getElementById('currency-status');
+    if (statusEl) {
+      const key = (wantsUSD || snap.loading) ? statusMessageKey(snap) : '';
+      statusEl.textContent = key ? I18n.t(key) : '';
+      statusEl.setAttribute('data-state', key ? (snap.loading ? 'loading' : snap.status) : 'idle');
+    }
+
+    const refreshBtn = document.getElementById('currency-refresh-btn');
+    if (refreshBtn) {
+      refreshBtn.hidden = !wantsUSD;
+      refreshBtn.disabled = snap.loading;
+      refreshBtn.textContent = I18n.t(snap.rate ? 'cur.refresh' : 'cur.retry');
+    }
+  }
+
+  /* ── lifecycle ── */
+
+  function init() {
+    requestedCurrency = loadPref() || 'ARS';
+    rate = loadCachedRate();
+    currency = (requestedCurrency === 'USD' && rate) ? 'USD' : 'ARS';
+    if (requestedCurrency === 'USD') refreshRate({ force: true });   // restore / verify in background
+    if (!timerId) {
+      timerId = setInterval(() => {
+        if (currency === 'USD' && statusKey() !== lastStatusKey) notify();
+      }, CHECK_MS);
+    }
+    lastStatusKey = statusKey();
+  }
+
+  return {
+    init, subscribe, setCurrency, refreshRate, getSnapshot, isUSD,
+    renderControls, formatAmount, balanceParts,
+  };
+
+})();
+
+
+/* ============================================================
    DASHBOARD MODULE  (Balance toggle + rendering)
    ============================================================ */
 
@@ -746,17 +1120,15 @@ const Dashboard = (() => {
     const el = document.getElementById('balance-amount');
     if (!el) return;
 
+    // Currency symbol follows the display currency; the mask never reveals any figure
+    const { symbol, int, dec } = CurrencyDisplay.balanceParts(DATA.user.balance);
     let html;
     if (balanceVisible) {
       // Show actual balance
-      const [int, dec] = DATA.user.balance.toLocaleString('es-AR', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }).split(',');
-      html = `<span class="balance-currency">$</span>${int}<span style="font-size:24px;opacity:.5">,${dec}</span>`;
+      html = `<span class="balance-currency">${symbol}</span>${int}<span style="font-size:24px;opacity:.5">${dec}</span>`;
     } else {
       // Show masked balance (8 bullets)
-      html = `<span class="balance-currency">$</span><span class="balance-masked">••••••••</span>`;
+      html = `<span class="balance-currency">${symbol}</span><span class="balance-masked">••••••••</span>`;
     }
 
     el.innerHTML = html;
@@ -793,7 +1165,7 @@ const Dashboard = (() => {
   function renderTarjeta() {
     const el = document.getElementById('tarjeta-limit');
     if (el) {
-      el.textContent = formatARS(DATA.user.card.limit);
+      el.textContent = formatMoney(DATA.user.card.limit);
       el.setAttribute('data-balance-sensitive', '');
     }
   }
@@ -810,7 +1182,7 @@ const Dashboard = (() => {
           <div class="movement-date">${m.category} · ${m.date}</div>
         </div>
         <div class="movement-amount ${m.amount < 0 ? 'debit' : 'credit'}" data-balance-sensitive>
-          ${formatAmountSigned(m.amount)}
+          ${formatMoneySigned(m.amount)}
         </div>
       </div>
     `).join('');
@@ -826,7 +1198,8 @@ const Dashboard = (() => {
     updateBalanceSensitiveElements();
   }
 
-  return { render, toggleBalanceVisibility, initBalanceVisibility, isBalanceVisible };
+  return { render, toggleBalanceVisibility, initBalanceVisibility, isBalanceVisible,
+           applyPrivacy: updateBalanceSensitiveElements };
 
 })();
 
@@ -873,8 +1246,8 @@ const Movements = (() => {
         <td><span class="badge badge-info">${m.category}</span></td>
         <td class="tx-date">${m.date}</td>
         <td style="text-align:right">
-          <span class="tx-amount ${m.amount < 0 ? 'debit' : 'credit'}">
-            ${formatAmountSigned(m.amount)}
+          <span class="tx-amount ${m.amount < 0 ? 'debit' : 'credit'}" data-balance-sensitive>
+            ${formatMoneySigned(m.amount)}
           </span>
         </td>
         <td style="text-align:center">
@@ -882,6 +1255,7 @@ const Movements = (() => {
         </td>
       </tr>
     `).join('');
+    Dashboard.applyPrivacy();   // rows are rebuilt on every filter/render
   }
 
   function renderStats() {
@@ -892,8 +1266,9 @@ const Movements = (() => {
     const creditsEl = document.getElementById('stats-credits');
     const countEl   = document.getElementById('stats-count');
 
-    if (debitsEl)  debitsEl.textContent  = formatAmountSigned(debits);
-    if (creditsEl) creditsEl.textContent = formatAmountSigned(credits);
+    // Totals are summed from the original ARS data and only then converted
+    if (debitsEl)  debitsEl.textContent  = formatMoneySigned(debits);
+    if (creditsEl) creditsEl.textContent = formatMoneySigned(credits);
     if (countEl)   countEl.textContent   = DATA.movements.length;
   }
 
@@ -910,6 +1285,7 @@ const Movements = (() => {
   function render() {
     renderStats();
     renderTable(getFiltered());
+    Dashboard.applyPrivacy();
   }
 
   return { render, onSearchInput, onCategoryChange };
@@ -997,6 +1373,14 @@ const NovaPoints = (() => {
 
   function findReward(id) { return DATA.rewards.find(r => r.id === id); }
 
+  // Cashback rewards carry a fixed ARS amount in their title; show it in the display currency
+  function rewardTitle(r) {
+    if (typeof r.amountARS === 'number' && CurrencyDisplay.isUSD()) {
+      return I18n.t('pts.cashback_title').replace('{amount}', formatMoney(r.amountARS));
+    }
+    return I18n.t(r.titleKey);
+  }
+
   function loadRedemptions() {
     try {
       const raw = JSON.parse(localStorage.getItem(STORAGE_KEY));
@@ -1019,7 +1403,7 @@ const NovaPoints = (() => {
     const locale = I18n.getLocale();
     const redeems = redemptions.slice().sort((a, b) => b.ts - a.ts).map(r => ({
       kind: 'redeem',
-      label: I18n.t('pts.redeem_label').replace('{title}', I18n.t(findReward(r.rewardId).titleKey)),
+      label: I18n.t('pts.redeem_label').replace('{title}', rewardTitle(findReward(r.rewardId))),
       date: new Date(r.ts).toLocaleDateString(locale, { day: '2-digit', month: 'short' }),
       points: -r.cost,
     }));
@@ -1064,7 +1448,7 @@ const NovaPoints = (() => {
         <div class="beneficio-img" style="background:${r.bg}">${r.emoji}</div>
         <div class="beneficio-body">
           <div class="beneficio-tag">${I18n.t('pts.type_' + r.type)}</div>
-          <div class="beneficio-title">${I18n.t(r.titleKey)}</div>
+          <div class="beneficio-title">${rewardTitle(r)}</div>
           <div class="beneficio-desc">${I18n.t(r.descKey)}</div>
           <div class="beneficio-footer">
             <span class="points-cost">${fmt(r.cost)} ${I18n.t('pts.unit')}</span>
@@ -1102,20 +1486,27 @@ const NovaPoints = (() => {
     renderBalanceCards();
     renderCatalog();
     renderHistory();
+    renderModalText();
     const rule = document.getElementById('points-rule');
     if (rule) rule.textContent = I18n.t('pts.rule');
+  }
+
+  // Keeps an open confirmation modal in sync with the display currency without reopening it
+  function renderModalText() {
+    if (!pendingReward) return;
+    const desc = document.getElementById('points-modal-desc');
+    if (desc) {
+      desc.textContent = I18n.t('pts.confirm_desc')
+        .replace('{title}', rewardTitle(pendingReward))
+        .replace('{cost}', fmt(pendingReward.cost));
+    }
   }
 
   function openRedeem(rewardId) {
     const r = findReward(rewardId);
     if (!r || r.cost > getBalance()) return;
     pendingReward = r;
-    const desc = document.getElementById('points-modal-desc');
-    if (desc) {
-      desc.textContent = I18n.t('pts.confirm_desc')
-        .replace('{title}', I18n.t(r.titleKey))
-        .replace('{cost}', fmt(r.cost));
-    }
+    renderModalText();
     const btn = document.getElementById('points-confirm-btn');
     if (btn) btn.disabled = false;
     document.getElementById('points-modal-overlay').classList.add('open');
@@ -1226,10 +1617,19 @@ document.addEventListener('DOMContentLoaded', () => {
   Theme.init();
   SidebarToggle.init();
   Dashboard.initBalanceVisibility();
+  CurrencyDisplay.init();            // before the first monetary render: restores USD if saved
   Dashboard.render();
   Movements.render();
   Beneficios.init();
   NovaPoints.init();
+  CurrencyDisplay.renderControls();
+  // Rate/currency changes re-render every monetary view in one synchronous pass
+  CurrencyDisplay.subscribe(() => {
+    CurrencyDisplay.renderControls();
+    Dashboard.render();
+    Movements.render();
+    NovaPoints.render();
+  });
 
   window.navigate          = (v)   => Router.navigate(v);
   window.openModal         = ()    => Modal.open();
@@ -1247,5 +1647,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.switchLocale      = (l)   => I18n.setLocale(l);
   window.toggleSidebar     = ()    => SidebarToggle.toggle();
   window.toggleBalanceVisibility = () => Dashboard.toggleBalanceVisibility();
+  window.setDisplayCurrency = (c) => CurrencyDisplay.setCurrency(c);
+  window.refreshExchangeRate = ()  => CurrencyDisplay.refreshRate({ force: true });
 
 });
