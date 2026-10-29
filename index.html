@@ -153,6 +153,24 @@
 
     <div class="page-wrapper">
 
+      <!-- Display currency: ARS / USD (official rate). Public info — never masked. -->
+      <div class="currency-bar" id="currency-bar" role="group" aria-label="Moneda de visualización">
+        <span class="currency-bar-label" data-i18n="cur.label">Moneda</span>
+        <div class="currency-switch">
+          <button type="button" class="currency-btn" id="currency-btn-ars" aria-pressed="true"
+                  onclick="setDisplayCurrency('ARS')">ARS</button>
+          <button type="button" class="currency-btn" id="currency-btn-usd" aria-pressed="false"
+                  onclick="setDisplayCurrency('USD')">USD</button>
+        </div>
+        <div class="currency-info">
+          <span class="currency-rate" id="currency-rate"></span>
+          <span class="currency-updated" id="currency-updated"></span>
+          <span class="currency-status" id="currency-status" role="status" aria-live="polite" data-state="idle"></span>
+        </div>
+        <button type="button" class="btn btn-ghost currency-refresh" id="currency-refresh-btn"
+                onclick="refreshExchangeRate()" hidden></button>
+      </div>
+
       <!-- ════════════════════════════════════
            VIEW: DASHBOARD
       ════════════════════════════════════ -->
@@ -209,6 +227,16 @@
               <span data-i18n="hero.ver_beneficios">Ver beneficios</span>
             </button>
           </div>
+        </div>
+
+        <!-- NovaPoints balance -->
+        <div class="points-chip" onclick="navigate('beneficios')" role="button" tabindex="0">
+          <div class="points-chip-icon">⭐</div>
+          <div class="points-chip-info">
+            <div class="points-chip-label" data-i18n="pts.balance_label">Tu saldo de puntos</div>
+            <div class="points-chip-value"><span id="dash-points-balance">0</span> <span data-i18n="pts.unit">puntos</span></div>
+          </div>
+          <span class="points-chip-link" data-i18n="pts.dash_link">Ver NovaPoints</span>
         </div>
 
         <!-- Quick actions -->
@@ -340,11 +368,11 @@
         <div class="stats-bar">
           <div class="stats-bar-item">
             <div class="stats-bar-label" data-i18n="mov.expenses">Gastos este mes</div>
-            <div class="stats-bar-value" id="stats-debits" style="color:var(--danger)"></div>
+            <div class="stats-bar-value" id="stats-debits" style="color:var(--danger)" data-balance-sensitive></div>
           </div>
           <div class="stats-bar-item">
             <div class="stats-bar-label" data-i18n="mov.income">Ingresos este mes</div>
-            <div class="stats-bar-value" id="stats-credits" style="color:var(--success)"></div>
+            <div class="stats-bar-value" id="stats-credits" style="color:var(--success)" data-balance-sensitive></div>
           </div>
           <div class="stats-bar-item">
             <div class="stats-bar-label" data-i18n="mov.count">Movimientos</div>
@@ -411,6 +439,24 @@
 
         <h1 class="page-title" data-i18n="ben.title">Beneficios exclusivos</h1>
         <p class="page-subtitle" data-i18n="ben.subtitle">Descuentos y promos para vos por ser cliente NovaBanco</p>
+
+        <!-- NovaPoints -->
+        <section class="points-section">
+          <h2 class="points-heading">⭐ <span data-i18n="pts.title">NovaPoints</span></h2>
+          <p class="page-subtitle" data-i18n="pts.subtitle">Acumulá puntos con tus consumos y canjealos por beneficios</p>
+
+          <div class="points-balance-card">
+            <div class="points-balance-label" data-i18n="pts.balance_label">Tu saldo de puntos</div>
+            <div class="points-balance-value"><span id="points-balance">0</span> <span class="points-balance-unit" data-i18n="pts.unit">puntos</span></div>
+            <div class="points-rule" id="points-rule" data-i18n="pts.rule">1 punto cada $100 de consumo</div>
+          </div>
+
+          <h3 class="points-subheading" data-i18n="pts.catalog_title">Canjeá tus puntos</h3>
+          <div class="beneficios-grid" id="points-catalog"></div>
+
+          <h3 class="points-subheading" data-i18n="pts.history_title">Historial de puntos</h3>
+          <div class="points-history" id="points-history"></div>
+        </section>
 
         <div class="beneficios-filter-bar">
           <button class="btn btn-primary"   id="filter-todos"           onclick="filterBeneficios('todos')"           data-i18n="ben.filter_todos">Todos</button>
@@ -514,6 +560,19 @@
   </div>
 </div>
 
+
+<!-- Modal: canje NovaPoints -->
+<div class="modal-overlay" id="points-modal-overlay" onclick="closePointsModalOutside(event)">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-icon">🎁</div>
+    <div class="modal-title" data-i18n="pts.confirm_title">Confirmar canje</div>
+    <div class="modal-desc" id="points-modal-desc"></div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closePointsRedeem()" data-i18n="pts.cancel">Cancelar</button>
+      <button class="btn btn-primary" id="points-confirm-btn" onclick="confirmPointsRedeem()" data-i18n="pts.confirm_btn">Confirmar canje</button>
+    </div>
+  </div>
+</div>
 
 <script src="js/app.js"></script>
 </body>
