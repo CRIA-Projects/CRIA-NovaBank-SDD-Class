@@ -1029,3 +1029,132 @@ html[data-sidebar-collapsed="true"] .main-content {
   html[data-sidebar-collapsed="true"] .sidebar        { width: var(--sidebar-w); }
   html[data-sidebar-collapsed="true"] .main-content   { margin-left: 0; }
 }
+
+
+/* ── NovaPoints ────────────────────────────────────────────── */
+.points-section        { margin-bottom: 40px; }
+.points-heading        { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 4px; }
+.points-subheading     { font-size: 16px; font-weight: 700; margin: 28px 0 14px; }
+
+.points-balance-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-top: 16px;
+}
+.points-balance-label  { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+.points-balance-value  { font-size: 40px; font-weight: 800; letter-spacing: -1px; color: var(--accent); margin: 6px 0; word-break: break-word; }
+.points-balance-unit   { font-size: 16px; font-weight: 600; color: var(--text-muted); letter-spacing: 0; }
+.points-rule           { font-size: 13px; color: var(--text-muted); }
+
+.points-cost           { font-size: 13px; font-weight: 700; color: var(--accent); }
+.points-reward .beneficio-footer { gap: 8px; flex-wrap: wrap; }
+.points-reward .btn[disabled] { opacity: 0.55; cursor: not-allowed; }
+
+.points-history {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px 20px;
+}
+
+.points-chip {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.points-chip:hover     { border-color: var(--accent); }
+.points-chip-icon      { width: 40px; height: 40px; border-radius: 12px; background: var(--accent-dim); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.points-chip-info      { flex: 1; min-width: 0; }
+.points-chip-label     { font-size: 12px; color: var(--text-muted); }
+.points-chip-value     { font-size: 20px; font-weight: 700; }
+.points-chip-link      { font-size: 13px; font-weight: 600; color: var(--accent); white-space: nowrap; }
+
+@media (max-width: 640px) {
+  .points-balance-value { font-size: 32px; }
+  .points-chip-link     { display: none; }
+  .points-history       { padding: 4px 14px; }
+}
+
+
+/* ── 11. Display currency bar (ARS / USD oficial) ─────────── */
+.currency-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-bottom: 20px;
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.currency-bar-label { font-size: 12px; font-weight: 600; color: var(--text-muted); }
+
+.currency-switch {
+  display: inline-flex;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 2px;
+}
+
+.currency-btn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.currency-btn:hover                 { color: var(--text); }
+.currency-btn[aria-pressed="true"]  { background: var(--accent); color: #fff; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25); }
+
+.currency-btn:focus-visible,
+.currency-refresh:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.currency-info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 14px;
+  flex: 1;
+  min-width: 0;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.currency-rate    { color: var(--text); font-weight: 600; }
+.currency-status:empty { display: none; }
+
+/* State is conveyed by an icon + text, not by color alone */
+.currency-status::before                       { margin-right: 4px; font-weight: 700; }
+.currency-status[data-state="loading"]::before { content: "⟳"; }
+.currency-status[data-state="ready"]::before   { content: "✓"; color: var(--success); }
+.currency-status[data-state="unverified"]::before,
+.currency-status[data-state="failed"]::before,
+.currency-status[data-state="old"]::before     { content: "⚠"; color: var(--warning); }
+.currency-status[data-state="error"]::before   { content: "✕"; color: var(--danger); }
+
+.currency-refresh { padding: 6px 12px; font-size: 13px; }
+.currency-refresh[hidden]   { display: none; }
+.currency-refresh:disabled  { opacity: 0.5; cursor: default; }
+
+@media (max-width: 640px) {
+  .currency-bar  { padding: 10px 12px; }
+  .currency-info { flex-basis: 100%; order: 3; }
+}
