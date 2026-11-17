@@ -1158,3 +1158,93 @@ html[data-sidebar-collapsed="true"] .main-content {
   .currency-bar  { padding: 10px 12px; }
   .currency-info { flex-basis: 100%; order: 3; }
 }
+
+/* ── 12. Análisis (gastos e ingresos por categoría) ────────── */
+
+.analisis-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.analisis-card { display: flex; flex-direction: column; }
+
+.analisis-total {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 20px;
+}
+.analisis-total.debit  { color: var(--danger); }
+.analisis-total.credit { color: var(--success); }
+
+.analisis-chart-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.analisis-chart {
+  width: 140px;
+  height: 140px;
+  flex-shrink: 0;
+}
+
+.analisis-chart-svg { width: 100%; height: 100%; }
+.analisis-chart-slice { transition: stroke 0.2s ease; }
+
+.analisis-legend {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.analisis-legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.analisis-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.analisis-legend-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text);
+}
+
+.analisis-legend-pct {
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.analisis-legend-amount {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.analisis-empty {
+  color: var(--text-muted);
+  font-size: 13px;
+  padding: 8px 0;
+}
+
+@media (max-width: 900px) {
+  .analisis-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .analisis-chart-wrapper { flex-direction: column; align-items: stretch; }
+  .analisis-chart { align-self: center; }
+}

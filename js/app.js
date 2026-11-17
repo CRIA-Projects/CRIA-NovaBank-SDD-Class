@@ -10,6 +10,7 @@ const LOCALES = {
     'nav.dashboard':        'Inicio',
     'nav.movimientos':      'Consumos',
     'nav.beneficios':       'Beneficios',
+    'nav.analisis':         'Análisis',
     'nav.resumen':          'Resumen',
     'nav.configuracion':    'Configuración',
     // Topbar
@@ -74,6 +75,13 @@ const LOCALES = {
     'ben.filter_salud':           '🏥 Salud',
     'ben.filter_entretenimiento': '🎬 Entretenimiento',
     'ben.empty':                  'No hay beneficios en esta categoría.',
+    // Análisis (gastos e ingresos por categoría)
+    'analisis.title':            'Análisis de gastos e ingresos',
+    'analisis.subtitle':         'Tus gastos e ingresos del mes, por categoría',
+    'analisis.expenses_title':   'Gastos por categoría',
+    'analisis.income_title':     'Ingresos por categoría',
+    'analisis.empty_expenses':   'No hay gastos para mostrar.',
+    'analisis.empty_income':     'No hay ingresos para mostrar.',
     // Modal
     'modal.title':           'Descargar resumen',
     'modal.desc':            'Seleccioná el período y el formato que querés descargar.',
@@ -156,6 +164,7 @@ const LOCALES = {
     'nav.dashboard':        'Home',
     'nav.movimientos':      'Expenses',
     'nav.beneficios':       'Benefits',
+    'nav.analisis':         'Analysis',
     'nav.resumen':          'Summary',
     'nav.configuracion':    'Settings',
     // Topbar
@@ -220,6 +229,13 @@ const LOCALES = {
     'ben.filter_salud':           '🏥 Health',
     'ben.filter_entretenimiento': '🎬 Entertainment',
     'ben.empty':                  'No benefits in this category.',
+    // Analysis (expenses & income by category)
+    'analisis.title':            'Income & expense analysis',
+    'analisis.subtitle':         "This month's expenses and income, by category",
+    'analisis.expenses_title':   'Expenses by category',
+    'analisis.income_title':     'Income by category',
+    'analisis.empty_expenses':   'No expenses to show.',
+    'analisis.empty_income':     'No income to show.',
     // Modal
     'modal.title':           'Download summary',
     'modal.desc':            'Select the period and format you want to download.',
@@ -302,6 +318,7 @@ const LOCALES = {
     'nav.dashboard':        'Início',
     'nav.movimientos':      'Despesas',
     'nav.beneficios':       'Benefícios',
+    'nav.analisis':         'Análise',
     'nav.resumen':          'Resumo',
     'nav.configuracion':    'Configurações',
     // Topbar
@@ -366,6 +383,13 @@ const LOCALES = {
     'ben.filter_salud':           '🏥 Saúde',
     'ben.filter_entretenimiento': '🎬 Entretenimento',
     'ben.empty':                  'Não há benefícios nesta categoria.',
+    // Análise (gastos e receitas por categoria)
+    'analisis.title':            'Análise de gastos e receitas',
+    'analisis.subtitle':         'Seus gastos e receitas do mês, por categoria',
+    'analisis.expenses_title':   'Gastos por categoria',
+    'analisis.income_title':     'Receitas por categoria',
+    'analisis.empty_expenses':   'Não há gastos para mostrar.',
+    'analisis.empty_income':     'Não há receitas para mostrar.',
     // Modal
     'modal.title':           'Baixar resumo',
     'modal.desc':            'Selecione o período e o formato que deseja baixar.',
@@ -488,6 +512,7 @@ const I18n = (() => {
     Movements.render();
     Beneficios.filter(Beneficios.getActiveCategory());
     NovaPoints.render();
+    Analisis.render();
     Router.refreshTitle();
     SidebarToggle.updateUI();
   }
@@ -637,6 +662,63 @@ function getTodayLabel() {
 
 
 /* ============================================================
+   CATEGORY BREAKDOWN  (Análisis — gastos/ingresos por categoría)
+   DATA.movements.category stores the literal Spanish display string
+   (e.g. "Comidas"), not an i18n key, so it must be resolved through
+   this map to get the matching existing `cat.*` locale key.
+   ============================================================ */
+
+const CATEGORY_LABEL_KEYS = {
+  'Comidas':         'cat.comidas',
+  'Supermercado':    'cat.supermercado',
+  'Entretenimiento': 'cat.entretenimiento',
+  'Transporte':      'cat.transporte',
+  'Sueldo':          'cat.sueldo',
+  'Tecnología':      'cat.tecnologia',
+};
+
+// Fallback palette used only if a category has no movement with a usable color
+const CATEGORY_COLOR_FALLBACKS = ['#FF7A20', '#00B4D8', '#34C759', '#FF9500', '#8A5CF6', '#E91E8C'];
+
+// First-seen color per category, so chart colors match the icons/colors already used elsewhere
+function categoryColor(category, fallbackIndex) {
+  const found = DATA.movements.find(m => m.category === category && m.color);
+  if (found) return found.color;
+  return CATEGORY_COLOR_FALLBACKS[fallbackIndex % CATEGORY_COLOR_FALLBACKS.length];
+}
+
+// Pure aggregation: groups movements of one direction ('expense' | 'income') by category.
+// Returns [{ category, labelKey, color, total, pct }] sorted descending by total (amounts are
+// always positive here). Never mutates `movements`. A category with a non-zero total is never
+// omitted, even if its rounded display percentage would be 0.
+function groupByCategory(movements, direction) {
+  const matches = direction === 'expense'
+    ? (m) => m.amount < 0
+    : (m) => m.amount > 0;
+
+  const totalsByCategory = new Map();
+  for (const m of movements) {
+    if (!matches(m)) continue;
+    const abs = Math.abs(m.amount);
+    totalsByCategory.set(m.category, (totalsByCategory.get(m.category) || 0) + abs);
+  }
+
+  const grandTotal = Array.from(totalsByCategory.values()).reduce((s, v) => s + v, 0);
+
+  const entries = Array.from(totalsByCategory.entries()).map(([category, total], i) => ({
+    category,
+    labelKey: CATEGORY_LABEL_KEYS[category] || null,
+    color: categoryColor(category, i),
+    total,
+    pct: grandTotal > 0 ? (total / grandTotal) * 100 : 0,
+  }));
+
+  entries.sort((a, b) => b.total - a.total);
+  return entries;
+}
+
+
+/* ============================================================
    ROUTER  (T09 — usa I18n.t() para títulos)
    ============================================================ */
 
@@ -646,6 +728,7 @@ const Router = (() => {
     dashboard:   'nav.dashboard',
     movimientos: 'nav.movimientos',
     beneficios:  'nav.beneficios',
+    analisis:    'nav.analisis',
   };
 
   let currentView = 'dashboard';
@@ -1294,6 +1377,103 @@ const Movements = (() => {
 
 
 /* ============================================================
+   ANALISIS MODULE  (expenses/income breakdown by category, pie chart)
+   Read-only: derives everything from DATA.movements, never mutates it.
+   ============================================================ */
+
+const Analisis = (() => {
+
+  // Donut chart built from stacked SVG circles (stroke-dasharray/offset per
+  // category) — no canvas, no external library. Legend is the accessible
+  // representation; the chart itself is aria-hidden.
+  function renderDonutSVG(entries) {
+    const r = 40;
+    const circumference = 2 * Math.PI * r;
+    const total = entries.reduce((s, e) => s + e.total, 0);
+
+    if (total <= 0) {
+      return `<svg class="analisis-chart-svg" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="${r}" fill="none" stroke="var(--border)" stroke-width="16"></circle>
+      </svg>`;
+    }
+
+    let cumulative = 0;
+    const slices = entries.map(e => {
+      const fraction = e.total / total;
+      const dash = fraction * circumference;
+      const gap = circumference - dash;
+      const rotation = -90 + (cumulative / total) * 360;
+      cumulative += e.total;
+      return `<circle class="analisis-chart-slice" cx="50" cy="50" r="${r}" fill="none"
+        stroke="${e.color}" stroke-width="16" stroke-dasharray="${dash} ${gap}"
+        transform="rotate(${rotation} 50 50)"></circle>`;
+    }).join('');
+
+    return `<svg class="analisis-chart-svg" viewBox="0 0 100 100" aria-hidden="true">${slices}</svg>`;
+  }
+
+  // Percentages are rounded only for display; a non-zero category never shows as a bare "0%"
+  function formatPct(pct) {
+    if (pct <= 0) return '0%';
+    if (pct < 1) return '<1%';
+    return Math.round(pct) + '%';
+  }
+
+  function categoryLabel(entry) {
+    return entry.labelKey ? I18n.t(entry.labelKey) : entry.category;
+  }
+
+  function renderLegend(entries, emptyKey) {
+    if (entries.length === 0) {
+      return `<div class="analisis-empty">${I18n.t(emptyKey)}</div>`;
+    }
+    return entries.map(e => `
+      <div class="analisis-legend-row">
+        <span class="analisis-legend-dot" style="background:${e.color}"></span>
+        <span class="analisis-legend-name">${categoryLabel(e)}</span>
+        <span class="analisis-legend-pct">${formatPct(e.pct)}</span>
+        <span class="analisis-legend-amount" data-balance-sensitive>${formatMoney(e.total)}</span>
+      </div>
+    `).join('');
+  }
+
+  function renderSide(direction, ids, emptyKey) {
+    const entries = groupByCategory(DATA.movements, direction);
+    const total = entries.reduce((s, e) => s + e.total, 0);
+
+    const totalEl = document.getElementById(ids.total);
+    if (totalEl) {
+      totalEl.textContent = formatMoney(total);
+      totalEl.setAttribute('data-balance-sensitive', '');
+    }
+
+    const chartEl = document.getElementById(ids.chart);
+    if (chartEl) chartEl.innerHTML = renderDonutSVG(entries);
+
+    const legendEl = document.getElementById(ids.legend);
+    if (legendEl) legendEl.innerHTML = renderLegend(entries, emptyKey);
+  }
+
+  function render() {
+    renderSide('expense', {
+      total:  'analisis-expenses-total',
+      chart:  'analisis-expenses-chart',
+      legend: 'analisis-expenses-legend',
+    }, 'analisis.empty_expenses');
+
+    renderSide('income', {
+      total:  'analisis-income-total',
+      chart:  'analisis-income-chart',
+      legend: 'analisis-income-legend',
+    }, 'analisis.empty_income');
+  }
+
+  return { render };
+
+})();
+
+
+/* ============================================================
    BENEFICIOS MODULE  (T09 — empty state usa I18n.t(); expone getActiveCategory)
    ============================================================ */
 
@@ -1622,6 +1802,7 @@ document.addEventListener('DOMContentLoaded', () => {
   Movements.render();
   Beneficios.init();
   NovaPoints.init();
+  Analisis.render();
   CurrencyDisplay.renderControls();
   // Rate/currency changes re-render every monetary view in one synchronous pass
   CurrencyDisplay.subscribe(() => {
@@ -1629,6 +1810,7 @@ document.addEventListener('DOMContentLoaded', () => {
     Dashboard.render();
     Movements.render();
     NovaPoints.render();
+    Analisis.render();
   });
 
   window.navigate          = (v)   => Router.navigate(v);
