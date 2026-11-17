@@ -1466,6 +1466,8 @@ const Analisis = (() => {
       chart:  'analisis-income-chart',
       legend: 'analisis-income-legend',
     }, 'analisis.empty_income');
+
+    Dashboard.applyPrivacy();   // amounts are rebuilt on every render (locale/currency changes too)
   }
 
   return { render };
