@@ -81,6 +81,17 @@
         <span data-i18n="nav.beneficios">Beneficios</span>
       </a>
 
+      <a class="nav-item" data-view="analisis"
+         title="Análisis" data-i18n-title="nav.analisis"
+         onclick="navigate('analisis'); return false;" href="#">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <path d="M21.21 15.89A10 10 0 1 1 8 2.83"/>
+          <path d="M22 12A10 10 0 0 0 12 2v10z"/>
+        </svg>
+        <span data-i18n="nav.analisis">Análisis</span>
+      </a>
+
       <div class="nav-section-label" data-i18n="sidebar.cuenta">Cuenta</div>
 
       <a class="nav-item" title="Resumen" data-i18n-title="nav.resumen"
@@ -471,6 +482,43 @@
 
       </div>
       <!-- /view-beneficios -->
+
+
+      <!-- ════════════════════════════════════
+           VIEW: ANÁLISIS  (gastos e ingresos por categoría)
+      ════════════════════════════════════ -->
+      <div class="view" id="view-analisis">
+
+        <h1 class="page-title" data-i18n="analisis.title">Análisis de gastos e ingresos</h1>
+        <p class="page-subtitle" data-i18n="analisis.subtitle">Tus gastos e ingresos del mes, por categoría</p>
+
+        <div class="analisis-grid">
+
+          <div class="card analisis-card">
+            <div class="section-header">
+              <span class="section-title" data-i18n="analisis.expenses_title">Gastos por categoría</span>
+            </div>
+            <div class="analisis-total debit" id="analisis-expenses-total"></div>
+            <div class="analisis-chart-wrapper">
+              <div class="analisis-chart" id="analisis-expenses-chart"></div>
+              <div class="analisis-legend" id="analisis-expenses-legend"></div>
+            </div>
+          </div>
+
+          <div class="card analisis-card">
+            <div class="section-header">
+              <span class="section-title" data-i18n="analisis.income_title">Ingresos por categoría</span>
+            </div>
+            <div class="analisis-total credit" id="analisis-income-total"></div>
+            <div class="analisis-chart-wrapper">
+              <div class="analisis-chart" id="analisis-income-chart"></div>
+              <div class="analisis-legend" id="analisis-income-legend"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- /view-analisis -->
 
     </div>
     <!-- /page-wrapper -->
